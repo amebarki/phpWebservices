@@ -8,19 +8,16 @@
     <th>ID</th>
     <th>NOM</th>
     <th>PRENOM</th>
-    <th>ACTION</th>
+    <th>gamerID </th>
   </tr>
 </thead>
 <tbdoy>
-{% for user in users %}
    <tr>
-     <td>{{gamer.id}}</td>
-     <td>{{gamer.nom}}</td>
-     <td>{{gamer.prenom}}</td>
-     <td>
-      </td>
-      <td>
-      </td>
+   {% for user in users %}
+     <td>{{user.id}}</td>
+     <td>{{user.nom}}</td>
+     <td>{{user.prenom}}</td>
+     <td>{{user.gamerID}}</td>
    </tr>
 {% endfor %}
 </tbdoy>

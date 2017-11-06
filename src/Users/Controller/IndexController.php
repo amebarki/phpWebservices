@@ -14,6 +14,14 @@ class IndexController
         return $app['twig']->render('users.list.html.twig', array('users' => $users));
     }
 
+
+    public function displayAction(Request $request, Application $app)
+    {
+
+        $parameters = $request->attributes->all();
+        $users = $app['repository.user']->getAllUsers($parameters['id']);
+        return $app['twig']->render('gamers.display.html.twig', array('users' => $users));
+    }
     
 
     public function deleteAction(Request $request, Application $app)
