@@ -4,8 +4,6 @@ namespace App\Gamers\Repository;
 
 use App\Gamers\Entity\Gamer;
 use Doctrine\DBAL\Connection;
-use App\Users\Repository;
-use App\Users\Entity\User;
 
 /**
  * gamer repository.
@@ -34,35 +32,18 @@ class GamerRepository
     *
     * @return array A collection of gamers, keyed by gamer id.
     */
-
-   public function getAllID()
-   {
-       $queryBuilder = $this->db->createQueryBuilder();
-       $queryBuilder
-           ->select('u.id')
-           ->from('gamers', 'u');
-       $statement = $queryBuilder->execute();
-       $gamersID = $statement->fetchAll();
-       foreach ($gamersID as $gamerID) {
-          var_dump($gamerID);
-       }
-       return $gamersID; 
-   }
-
-
    public function getAll()
    {
        $queryBuilder = $this->db->createQueryBuilder();
        $queryBuilder
            ->select('u.*')
            ->from('gamers', 'u');
+
        $statement = $queryBuilder->execute();
        $gamersData = $statement->fetchAll();
-        
        foreach ($gamersData as $gamerData) {
-           $gamerEntityList[$gamerData['id']] = new gamer($gamerData['id'], $gamerData['pseudo'], $gamerData['team']);      
+           $gamerEntityList[$gamerData['id']] = new gamer($gamerData['id'], $gamerData['pseudo'], $gamerData['team']);
        }
-
 
        return $gamerEntityList;
    }
@@ -82,18 +63,28 @@ class GamerRepository
         */
     public function getAllUsers($id)
     {
-      $queryBuilder = $this->db->createQueryBuilder();
+      
+
+      /*     $queryBuilder = $this->db->createQueryBuilder();
        $queryBuilder
            ->select('u.*')
            ->from('users', 'u')
-           ->where('gamerID = ?')
+          ->where('gamerID = :id');
+       $statement = $queryBuilder->execute();
+       $usersData = $statement->fetchAll();
+       foreach ($usersData as $userData) {
+           $userEntityList[$userData['id']] = new user($userData['id'], $userData['nom'], $userData['prenom']);
+       
+       return $userEntityList;*/
+       $queryBuilder = $this->db->createQueryBuilder();
+       $queryBuilder
+           ->select('u.*')
+           ->from('gamers', 'u')
+           ->where('id = ?')
            ->setParameter(0, $id);
        $statement = $queryBuilder->execute();
-       $usersData = $statement->fetchAll();       
-       foreach ($usersData as $userData) {
-           $userEntityList[$userData['id']] = new user($userData['id'], $userData['nom'], $userData['prenom'],$userData['gamerID']);
-       }
-      return $userEntityList;
+       $gamerData = $statement->fetchAll();
+       return new gamer($gamerData[0]['id'], $gamerData[0]['pseudo'], $gamerData[0]['team']);
     }
 
 

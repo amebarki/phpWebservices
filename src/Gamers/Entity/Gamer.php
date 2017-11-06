@@ -10,8 +10,6 @@ class Gamer
 
     protected $pseudo;
 
-    protected $listUsers;
-
     public function __construct($id, $team, $pseudo)
     {
         $this->id = $id;
