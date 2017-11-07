@@ -11,8 +11,8 @@ class IndexController
     public function listAction(Request $request, Application $app)
     {
         $gamers = $app['repository.gamer']->getAll();
-
-        return $app['twig']->render('gamers.list.html.twig', array('gamers' => $gamers));
+        $users = $app['repository.user']->getAll();
+        return $app['twig']->render('gamers.list.html.twig', array('gamers' => $gamers,'users' => $users));
     }
 
 	public function displayAction(Request $request, Application $app)
@@ -20,9 +20,6 @@ class IndexController
 
         $parameters = $request->attributes->all();
         $users = $app['repository.gamer']->getAllUsers($parameters['id']);
-        var_dump($users);
-
-        die;
         return $app['twig']->render('gamers.display.html.twig', array('users' => $users));
     }
 
@@ -65,7 +62,7 @@ class IndexController
         $content = 'john';
         $myJSON = json_encode($content);
       //  echo $myJSON;
-      //  var_dump($myObj);
+       var_dump($content);
         return new Response($myJSON,Response::HTTP_OK,array('Content-type' => 'application/json'));
     }
 
